@@ -1,0 +1,630 @@
+KLEEN-AIR PROJECT - CONSOLIDATED TABLES & STATISTICAL ANALYSIS
+Generated automatically by dump_report_tables.py
+Contents: model comparison, early-warning path, label-space crosswalk,
+per-class reports, statistical analysis, raw metrics, confusion matrices,
+per-class recall, training traces, feature-selection tables, EDA tables.
+
+
+==============================================================================
+1. MODEL COMPARISON ON THE TEST SET
+==============================================================================
+MODEL COMPARISON ON THE TEST SET
+============================================================
+                            RMSE     MAE      R2  Accuracy  Precision_macro  Recall_macro  F1_macro  F1_weighted  Recall_high_risk
+linear_logistic_baseline  0.8067  0.5436  0.9789    0.8542           0.6003        0.9132    0.6789       0.8681            0.9097
+random_forest             0.8033  0.5260  0.9791    0.9139           0.6559        0.6779    0.6632       0.9161            0.7355
+xgboost                   0.7785  0.5143  0.9803    0.9267           0.7681        0.9051    0.8181       0.9282            0.8452
+naive_persistence         0.8991  0.5981  0.9738       NaN              NaN           NaN       NaN          NaN               NaN
+
+
+
+==============================================================================
+2. MODEL COMPARISON (full precision, CSV)
+==============================================================================
+,RMSE,MAE,R2,Accuracy,Precision_macro,Recall_macro,F1_macro,F1_weighted,Recall_high_risk
+linear_logistic_baseline,0.806691,0.543589,0.978879,0.854232,0.600312,0.91316,0.678867,0.868114,0.909677
+random_forest,0.803321,0.526014,0.979055,0.913923,0.655907,0.677912,0.663188,0.916145,0.735484
+xgboost,0.778524,0.514329,0.980328,0.926698,0.768077,0.905096,0.818135,0.928237,0.845161
+naive_persistence,0.899085,0.598076,0.973764,,,,,,
+
+
+
+==============================================================================
+3. EARLY-WARNING PATH: PM2.5 FORECAST -> EAQI PM2.5 BAND
+==============================================================================
+EARLY-WARNING PATH: PM2.5 FORECAST -> EAQI PM2.5 BAND
+(scored against the EAQI PM2.5 band of the OBSERVED next-hour PM2.5)
+============================================================
+                          Accuracy  Precision_macro  Recall_macro  F1_macro  F1_weighted  Recall_high_risk
+linear_logistic_baseline    0.9516           0.8854        0.8861    0.8856       0.9516            0.8794
+random_forest               0.9519           0.7047        0.7007    0.7027       0.9519            0.8599
+xgboost                     0.9525           0.7097        0.7095    0.7096       0.9526            0.8988
+
+
+
+==============================================================================
+4. LABEL-SPACE CROSSWALK (PM2.5 band vs official EAQI category)
+==============================================================================
+LABEL-SPACE CROSSWALK (rows: PM2.5 band of observed next-hour PM2.5, cols: official next-hour EAQI category, row-normalised)
+============================================================
+eaqi_category_next_hour   Fair   Good  Moderate   Poor  Very Poor
+pm2_5_next_hour                                                  
+Fair                     0.459  0.000     0.515  0.026        0.0
+Good                     0.848  0.076     0.068  0.008        0.0
+Moderate                 0.000  0.000     0.995  0.005        0.0
+Poor                     0.000  0.000     0.988  0.012        0.0
+
+
+
+==============================================================================
+5. PER-CLASS CLASSIFICATION REPORTS (all models)
+==============================================================================
+PER-CLASS CLASSIFICATION REPORT (test set)
+============================================================
+
+--- linear_logistic_baseline ---
+                precision    recall  f1-score   support
+
+          Good       0.40      0.97      0.57       728
+          Fair       0.96      0.84      0.90      9443
+      Moderate       0.84      0.86      0.85      2825
+          Poor       0.54      0.89      0.67       154
+     Very Poor       0.25      1.00      0.40         1
+Extremely Poor       0.00      0.00      0.00         0
+
+      accuracy                           0.85     13151
+     macro avg       0.50      0.76      0.57     13151
+  weighted avg       0.90      0.85      0.87     13151
+
+
+--- random_forest ---
+                precision    recall  f1-score   support
+
+          Good       0.62      0.83      0.71       728
+          Fair       0.96      0.93      0.94      9443
+      Moderate       0.87      0.90      0.89      2825
+          Poor       0.82      0.73      0.77       154
+     Very Poor       0.00      0.00      0.00         1
+Extremely Poor       0.00      0.00      0.00         0
+
+      accuracy                           0.91     13151
+     macro avg       0.55      0.56      0.55     13151
+  weighted avg       0.92      0.91      0.92     13151
+
+
+--- xgboost ---
+                precision    recall  f1-score   support
+
+          Good       0.67      0.83      0.74       728
+          Fair       0.96      0.94      0.95      9443
+      Moderate       0.89      0.92      0.90      2825
+          Poor       0.81      0.84      0.82       154
+     Very Poor       0.50      1.00      0.67         1
+Extremely Poor       0.00      0.00      0.00         0
+
+      accuracy                           0.93     13151
+     macro avg       0.64      0.75      0.68     13151
+  weighted avg       0.93      0.93      0.93     13151
+
+
+
+==============================================================================
+6. STATISTICAL ANALYSIS (bootstrap CIs, paired tests, McNemar, residuals, SHAP)
+==============================================================================
+STATISTICAL ANALYSIS (test set)
+============================================================
+
+[1] Bootstrap 95% confidence intervals (1000 resamples):
+  linear_logistic_baseline: RMSE 95% CI [0.7852, 0.8292]
+  linear_logistic_baseline: F1_macro 95% CI [0.5903, 0.7986]
+  random_forest: RMSE 95% CI [0.7805, 0.8268]
+  random_forest: F1_macro 95% CI [0.6516, 0.8377]
+  xgboost: RMSE 95% CI [0.7563, 0.8013]
+  xgboost: F1_macro 95% CI [0.6767, 0.8916]
+
+[2] Paired error tests vs reference regressor 'xgboost':
+  xgboost vs linear_logistic_baseline:
+    paired t-test on squared errors: t=-5.396, p=6.916e-08
+    Wilcoxon signed-rank on |errors|: W=37578516.0, p=1.153e-38
+  xgboost vs random_forest:
+    paired t-test on squared errors: t=-4.926, p=8.513e-07
+    Wilcoxon signed-rank on |errors|: W=40982532.0, p=2.147e-07
+  xgboost vs naive_persistence:
+    paired t-test on squared errors: t=-17.074, p=1.147e-64
+    Wilcoxon signed-rank on |errors|: W=33506447.0, p=1.024e-110
+
+[3] McNemar tests vs reference classifier 'xgboost':
+  xgboost vs linear_logistic_baseline: McNemar (continuity-corrected) b=1187, c=234, chi2=637.793, p=1.009e-140
+  xgboost vs random_forest: McNemar (continuity-corrected) b=364, c=196, chi2=49.802, p=1.701e-12
+
+[4] Residual diagnostics for 'xgboost':
+  mean: -0.0762
+  std: 0.7748
+  skew: -0.5096
+  lag1_autocorr: 0.1489
+  shapiro_W: 0.8791
+  shapiro_p: 0.0000
+
+[5] SHAP driver ranking with plausible emission sources:
+  SHAP global importance (best tree regressor: xgboost):
+    pm2_5 (μg/m³)                mean|SHAP| =   4.9772  -> current fine-particle level (persistence)
+    pm10 (μg/m³)                 mean|SHAP| =   0.4526  -> coarse particles (dust, resuspension, combustion)
+    hour                         mean|SHAP| =   0.1767  -> diurnal activity pattern (traffic, heating)
+    pm2_5_lag_3                  mean|SHAP| =   0.1466  -> recent pollution history
+    pm2_5_lag_1                  mean|SHAP| =   0.1194  -> recent pollution history
+    carbon_monoxide (μg/m³)      mean|SHAP| =   0.1159  -> incomplete combustion / road traffic
+    relative_humidity_2m (%)     mean|SHAP| =   0.1121  -> meteorology (particle formation/growth)
+    pm2_5_rolling_mean_24        mean|SHAP| =   0.0812  -> 24 h background pollution level
+    wind_direction_100m (°)      mean|SHAP| =   0.0742  -> meteorology (transport direction)
+    nitrogen_dioxide (μg/m³)     mean|SHAP| =   0.0712  -> road traffic & fuel combustion
+    wind_speed_100m (km/h)       mean|SHAP| =   0.0599  -> meteorology (dispersion)
+    temperature_2m (°C)          mean|SHAP| =   0.0567  -> meteorology (reaction rates, inversions)
+    european_aqi (EAQI)          mean|SHAP| =   0.0540  -> overall current air quality (aggregate index)
+    ozone (μg/m³)                mean|SHAP| =   0.0474  -> photochemical smog (secondary formation)
+    month                        mean|SHAP| =   0.0272  -> seasonal pattern (heating season, meteorology)
+    sulphur_dioxide (μg/m³)      mean|SHAP| =   0.0251  -> industry & power generation
+    pm2_5_lag_24                 mean|SHAP| =   0.0232  -> day-ahead pollution level
+    rain (mm)                    mean|SHAP| =   0.0168  -> meteorology (wet deposition)
+    precipitation (mm)           mean|SHAP| =   0.0057  -> meteorology (wet deposition)
+
+
+
+==============================================================================
+7. RAW METRICS - linear_logistic_baseline
+==============================================================================
+{
+  "regression": {
+    "RMSE": 0.8066908710765713,
+    "MAE": 0.5435887780398875,
+    "R2": 0.9788788545919787
+  },
+  "classification": {
+    "Accuracy": 0.8542316173675005,
+    "Precision_macro": 0.6003119870121318,
+    "Recall_macro": 0.9131599517992848,
+    "F1_macro": 0.6788665200469843,
+    "F1_weighted": 0.8681142459727224,
+    "Recall_high_risk": 0.9096774193548387
+  }
+}
+
+
+
+==============================================================================
+7. RAW METRICS - random_forest
+==============================================================================
+{
+  "regression": {
+    "RMSE": 0.8033205977206254,
+    "MAE": 0.526013915958242,
+    "R2": 0.9790549699697393
+  },
+  "classification": {
+    "Accuracy": 0.913922895597293,
+    "Precision_macro": 0.6559066091495701,
+    "Recall_macro": 0.6779119096821885,
+    "F1_macro": 0.6631875173832992,
+    "F1_weighted": 0.9161449700720118,
+    "Recall_high_risk": 0.7354838709677419
+  }
+}
+
+
+
+==============================================================================
+7. RAW METRICS - xgboost
+==============================================================================
+{
+  "regression": {
+    "RMSE": 0.7785241666449618,
+    "MAE": 0.5143286933881521,
+    "R2": 0.9803280515105792
+  },
+  "classification": {
+    "Accuracy": 0.9266975895369174,
+    "Precision_macro": 0.7680768610667542,
+    "Recall_macro": 0.9050963796858362,
+    "F1_macro": 0.8181353837822585,
+    "F1_weighted": 0.92823650921467,
+    "Recall_high_risk": 0.8451612903225807
+  }
+}
+
+
+
+==============================================================================
+8. CONFUSION MATRIX (counts) - linear_logistic_baseline
+==============================================================================
+y_pred_cat      Good  Fair  Moderate  Poor  Very Poor  Extremely Poor
+y_true_cat                                                           
+Good             708    20         0     0          0               0
+Fair            1048  7955       440     0          0               0
+Moderate           0   276      2433   116          0               0
+Poor               0     0        14   137          3               0
+Very Poor          0     0         0     0          1               0
+Extremely Poor     0     0         0     0          0               0
+
+
+
+==============================================================================
+9. PER-CLASS RECALL (row-normalised) - linear_logistic_baseline
+==============================================================================
+y_pred_cat       Good   Fair  Moderate   Poor  Very Poor  Extremely Poor
+y_true_cat                                                              
+Good            0.973  0.002     0.000  0.000        0.0             0.0
+Fair            1.440  0.842     0.156  0.000        0.0             0.0
+Moderate        0.000  0.029     0.861  0.753        0.0             0.0
+Poor            0.000  0.000     0.005  0.890        3.0             0.0
+Very Poor       0.000  0.000     0.000  0.000        1.0             0.0
+Extremely Poor  0.000  0.000     0.000  0.000        0.0             0.0
+
+
+
+==============================================================================
+8. CONFUSION MATRIX (counts) - random_forest
+==============================================================================
+y_pred_cat      Good  Fair  Moderate  Poor  Very Poor  Extremely Poor
+y_true_cat                                                           
+Good             606   122         0     0          0               0
+Fair             367  8749       327     0          0               0
+Moderate           0   250      2552    23          0               0
+Poor               0     0        41   112          1               0
+Very Poor          0     0         0     1          0               0
+Extremely Poor     0     0         0     0          0               0
+
+
+
+==============================================================================
+9. PER-CLASS RECALL (row-normalised) - random_forest
+==============================================================================
+y_pred_cat       Good   Fair  Moderate   Poor  Very Poor  Extremely Poor
+y_true_cat                                                              
+Good            0.832  0.013     0.000  0.000        0.0             0.0
+Fair            0.504  0.927     0.116  0.000        0.0             0.0
+Moderate        0.000  0.026     0.903  0.149        0.0             0.0
+Poor            0.000  0.000     0.015  0.727        1.0             0.0
+Very Poor       0.000  0.000     0.000  0.006        0.0             0.0
+Extremely Poor  0.000  0.000     0.000  0.000        0.0             0.0
+
+
+
+==============================================================================
+8. CONFUSION MATRIX (counts) - xgboost
+==============================================================================
+y_pred_cat      Good  Fair  Moderate  Poor  Very Poor  Extremely Poor
+y_true_cat                                                           
+Good             605   123         0     0          0               0
+Fair             294  8856       293     0          0               0
+Moderate           0   199      2596    30          0               0
+Poor               0     0        24   129          1               0
+Very Poor          0     0         0     0          1               0
+Extremely Poor     0     0         0     0          0               0
+
+
+
+==============================================================================
+9. PER-CLASS RECALL (row-normalised) - xgboost
+==============================================================================
+y_pred_cat       Good   Fair  Moderate   Poor  Very Poor  Extremely Poor
+y_true_cat                                                              
+Good            0.831  0.013     0.000  0.000        0.0             0.0
+Fair            0.404  0.938     0.104  0.000        0.0             0.0
+Moderate        0.000  0.021     0.919  0.195        0.0             0.0
+Poor            0.000  0.000     0.008  0.838        1.0             0.0
+Very Poor       0.000  0.000     0.000  0.000        1.0             0.0
+Extremely Poor  0.000  0.000     0.000  0.000        0.0             0.0
+
+
+
+==============================================================================
+10. TRAINING TRACE - linear_logistic_baseline
+==============================================================================
+Training trace - linear_logistic_baseline
+Generated: 2026-10-30 14:02:17
+------------------------------------------------------------
+Time-series cross-validation on the training block (5 folds):
+  Fold 1: RMSE=1.7258 MAE=1.1888 R2=0.9667 | F1_macro=0.5861 Acc=0.8442
+  Fold 2: RMSE=1.2376 MAE=0.8400 R2=0.9754 | F1_macro=0.6989 Acc=0.8776
+  Fold 3: RMSE=0.9414 MAE=0.6410 R2=0.9834 | F1_macro=0.5840 Acc=0.8584
+  Fold 4: RMSE=0.9003 MAE=0.6182 R2=0.9808 | F1_macro=0.5904 Acc=0.8666
+  Fold 5: RMSE=0.8510 MAE=0.5920 R2=0.9815 | F1_macro=0.7258 Acc=0.8625
+  CV mean: RMSE=1.1312 +/- 0.3264 | F1_macro=0.6370 +/- 0.0621
+Validation block: RMSE=0.9271 | F1_macro=0.7255
+Total training wall-time: 12.9 s
+
+
+
+==============================================================================
+10. TRAINING TRACE - random_forest
+==============================================================================
+Training trace - random_forest
+Generated: 2026-10-30 14:02:56
+------------------------------------------------------------
+Time-series CV grid search (TimeSeriesSplit, 3 folds):
+  Regressor candidates (neg-RMSE scoring):
+    score=-1.0766 +/- 0.2313  params={'max_depth': 12, 'min_samples_split': 5, 'n_estimators': 200}
+    score=-1.0735 +/- 0.2317  params={'max_depth': None, 'min_samples_split': 5, 'n_estimators': 200}
+  Best regressor params: {'max_depth': None, 'min_samples_split': 5, 'n_estimators': 200}
+  Classifier candidates (macro-F1 scoring):
+    score=0.6962 +/- 0.0585  params={'class_weight': 'balanced', 'max_depth': 16, 'min_samples_split': 5, 'n_estimators': 200}
+    score=0.6900 +/- 0.0595  params={'class_weight': 'balanced', 'max_depth': None, 'min_samples_split': 5, 'n_estimators': 200}
+  Best classifier params: {'class_weight': 'balanced', 'max_depth': 16, 'min_samples_split': 5, 'n_estimators': 200}
+Validation block: RMSE=0.9307 | F1_macro=0.8092
+Total training wall-time: 38.5 s
+
+
+
+==============================================================================
+10. TRAINING TRACE - xgboost
+==============================================================================
+Training trace - xgboost
+Generated: 2026-10-30 14:03:03
+------------------------------------------------------------
+Model: xgboost (native xgboost available: True)
+Training rows: 61368 | validation rows: 13151
+Hyper-parameters: n_estimators<=1000, learning_rate=0.05, max_depth=6, subsample=0.9, colsample_bytree=0.9, early_stopping_rounds=50
+Regressor best iteration: 398
+Inverse-frequency class weights: Fair=0.336, Good=7.165, Moderate=0.560, Poor=10.169, Very Poor=557.891
+Classifier best iteration: 920
+Training wall-time (regressor + classifier): 6.4 s
+Total training wall-time: 6.4 s
+
+
+
+==============================================================================
+11. RANDOM FOREST FEATURE IMPORTANCE (selection step)
+==============================================================================
+===== RANDOM FOREST FEATURE IMPORTANCE =====
+pm2_5 (μg/m³)               0.974813
+pm2_5_lag_1                 0.004669
+pm2_5_lag_3                 0.002052
+pm10 (μg/m³)                0.001886
+wind_direction_100m (°)     0.001668
+carbon_monoxide (μg/m³)     0.001575
+wind_speed_100m (km/h)      0.001556
+pm2_5_rolling_mean_24       0.001514
+temperature_2m (°C)         0.001412
+pm2_5_lag_24                0.001335
+hour                        0.001327
+nitrogen_dioxide (μg/m³)    0.001252
+sulphur_dioxide (μg/m³)     0.001210
+relative_humidity_2m (%)    0.001158
+ozone (μg/m³)               0.001084
+month                       0.000530
+european_aqi (EAQI)         0.000400
+rain (mm)                   0.000287
+precipitation (mm)          0.000274
+Name: Importance, dtype: float64
+
+
+
+==============================================================================
+12. RANDOM FOREST FEATURE IMPORTANCE (CSV)
+==============================================================================
+,Importance
+pm2_5 (μg/m³),0.9748127139351157
+pm2_5_lag_1,0.004668933590673291
+pm2_5_lag_3,0.0020520225120374343
+pm10 (μg/m³),0.00188559439884775
+wind_direction_100m (°),0.0016678968596836642
+carbon_monoxide (μg/m³),0.0015751183673836954
+wind_speed_100m (km/h),0.001556360543109247
+pm2_5_rolling_mean_24,0.0015135248193675322
+temperature_2m (°C),0.0014121861811788143
+pm2_5_lag_24,0.0013349534072350782
+hour,0.0013271286333470427
+nitrogen_dioxide (μg/m³),0.0012518083870464783
+sulphur_dioxide (μg/m³),0.0012096341170285602
+relative_humidity_2m (%),0.0011579681581822922
+ozone (μg/m³),0.001083936153059459
+month,0.0005295862791762282
+european_aqi (EAQI),0.00039969297888630697
+rain (mm),0.0002870725898309571
+precipitation (mm),0.000273868088810533
+
+
+
+==============================================================================
+13. FEATURE CORRELATIONS WITH NEXT-HOUR PM2.5
+==============================================================================
+===== CORRELATION WITH NEXT-HOUR PM2.5 =====
+pm2_5 (μg/m³)               0.987071
+pm2_5_lag_1                 0.964760
+pm10 (μg/m³)                0.942779
+pm2_5_lag_3                 0.909413
+pm2_5_rolling_mean_24       0.832503
+carbon_monoxide (μg/m³)     0.725350
+european_aqi (EAQI)         0.721169
+pm2_5_lag_24                0.658429
+sulphur_dioxide (μg/m³)     0.584900
+nitrogen_dioxide (μg/m³)    0.567285
+ozone (μg/m³)              -0.430770
+temperature_2m (°C)        -0.326285
+relative_humidity_2m (%)    0.271648
+wind_direction_100m (°)    -0.229731
+wind_speed_100m (km/h)     -0.213528
+rain (mm)                  -0.078599
+precipitation (mm)         -0.076999
+hour                       -0.043446
+month                      -0.040506
+Name: pm2_5_next_hour, dtype: float64
+
+
+
+==============================================================================
+14. EDA - SUMMARY STATISTICS & DATA CHECKS
+==============================================================================
+========== DATASET OVERVIEW ==========
+Rows: 87696
+Columns: 14
+Start date: 2016-09-30 00:00:00
+End date: 2026-10-01 23:00:00
+Column names: ['time', 'pm10 (μg/m³)', 'pm2_5 (μg/m³)', 'carbon_monoxide (μg/m³)', 'nitrogen_dioxide (μg/m³)', 'sulphur_dioxide (μg/m³)', 'ozone (μg/m³)', 'european_aqi (EAQI)', 'temperature_2m (°C)', 'relative_humidity_2m (%)', 'rain (mm)', 'wind_speed_100m (km/h)', 'wind_direction_100m (°)', 'precipitation (mm)']
+
+========== MISSING VALUES ==========
+                          Missing Count  Missing Percentage (%)
+time                                  0                     0.0
+pm10 (μg/m³)                          0                     0.0
+pm2_5 (μg/m³)                         0                     0.0
+carbon_monoxide (μg/m³)               0                     0.0
+nitrogen_dioxide (μg/m³)              0                     0.0
+sulphur_dioxide (μg/m³)               0                     0.0
+ozone (μg/m³)                         0                     0.0
+european_aqi (EAQI)                   0                     0.0
+temperature_2m (°C)                   0                     0.0
+relative_humidity_2m (%)              0                     0.0
+rain (mm)                             0                     0.0
+wind_speed_100m (km/h)                0                     0.0
+wind_direction_100m (°)               0                     0.0
+precipitation (mm)                    0                     0.0
+
+========== DUPLICATE CHECKS ==========
+Duplicate rows: 0
+Duplicate timestamps: 0
+
+========== TIMESTAMP CHECKS ==========
+Time column type: datetime64[us]
+First timestamp: 2016-09-30 00:00:00
+Last timestamp: 2026-10-01 23:00:00
+Most common time interval:
+time
+0 days 01:00:00    87695
+Name: count, dtype: int64
+
+========== DESCRIPTIVE STATISTICS ==========
+                            count    mean    std   min    25%    50%    75%    max
+pm10 (μg/m³)              87696.0   15.68   9.22   1.5    9.2   13.3   19.6   86.6
+pm2_5 (μg/m³)             87696.0   11.27   7.89   0.9    5.8    8.9   14.3   83.5
+carbon_monoxide (μg/m³)   87696.0  208.94  72.06  12.0  162.0  191.0  239.0  803.0
+nitrogen_dioxide (μg/m³)  87696.0   15.19  10.20   1.2    7.7   12.4   19.9  106.7
+sulphur_dioxide (μg/m³)   87696.0    2.08   1.30   0.0    1.2    1.8    2.6   21.4
+ozone (μg/m³)             87696.0   50.39  27.74   0.0   30.0   50.0   68.0  175.0
+european_aqi (EAQI)       87696.0   34.59  10.27  12.0   26.0   33.0   42.0   95.0
+temperature_2m (°C)       87696.0   10.88   8.27 -15.0    4.5   10.4   17.0   39.8
+relative_humidity_2m (%)  87696.0   74.29  18.07  11.0   62.0   79.0   89.0  100.0
+rain (mm)                 87696.0    0.07   0.33   0.0    0.0    0.0    0.0   15.8
+wind_speed_100m (km/h)    87696.0   22.30   9.72   0.0   15.5   21.7   28.2   89.8
+wind_direction_100m (°)   87696.0  202.08  91.39   0.0  125.0  224.0  274.0  360.0
+precipitation (mm)        87696.0    0.07   0.33   0.0    0.0    0.0    0.0   15.8
+
+========== EUROPEAN AQI SUMMARY ==========
+Minimum EAQI: 12
+Maximum EAQI: 95
+Mean EAQI: 34.59
+Median EAQI: 33.0
+
+
+
+==============================================================================
+15. EDA - OUTLIER INSPECTION & PHYSICAL VALIDITY
+==============================================================================
+========== OUTLIER INSPECTION (IQR) ==========
+                Variable  Lower Bound  Upper Bound  Potential Outliers  Percentage (%)
+            pm10 (μg/m³)        -6.40        35.20                3851            4.39
+           pm2_5 (μg/m³)        -6.95        27.05                4474            5.10
+ carbon_monoxide (μg/m³)        46.50       354.50                3973            4.53
+nitrogen_dioxide (μg/m³)       -10.60        38.20                3315            3.78
+ sulphur_dioxide (μg/m³)        -0.90         4.70                3735            4.26
+           ozone (μg/m³)       -27.00       125.00                 694            0.79
+     european_aqi (EAQI)         2.00        66.00                 473            0.54
+     temperature_2m (°C)       -14.25        35.75                  62            0.07
+relative_humidity_2m (%)        21.50       129.50                 152            0.17
+               rain (mm)         0.00         0.00               12817           14.62
+  wind_speed_100m (km/h)        -3.55        47.25                1153            1.31
+ wind_direction_100m (°)       -98.50       497.50                   0            0.00
+      precipitation (mm)         0.00         0.00               13693           15.61
+
+========== PHYSICAL VALIDITY CHECKS ==========
+Negative PM10: 0
+Negative PM2.5: 0
+Negative carbon monoxide: 0
+Negative nitrogen dioxide: 0
+Negative sulphur dioxide: 0
+Negative ozone: 0
+Humidity outside 0-100%: 0
+Negative rainfall: 0
+Negative precipitation: 0
+Negative wind speed: 0
+Wind direction outside 0-360 degrees: 0
+
+
+
+==============================================================================
+16. EDA - DISTRIBUTIONS & CATEGORY COUNTS
+==============================================================================
+========== EAQI CATEGORY COUNTS ==========
+european_aqi (EAQI)
+Good               3039
+Fair              54674
+Moderate          28471
+Poor               1489
+Very Poor            23
+Extremely Poor        0
+Name: count, dtype: int64
+
+========== EAQI CATEGORY PERCENTAGES (%) ==========
+european_aqi (EAQI)
+Good               3.47
+Fair              62.34
+Moderate          32.47
+Poor               1.70
+Very Poor          0.03
+Extremely Poor     0.00
+Name: proportion, dtype: float64
+
+========== PROVISIONAL PM2.5 CATEGORY COUNTS ==========
+pm2_5 (μg/m³)
+Good              15011
+Fair              52447
+Moderate          19997
+Poor                241
+Very Poor             0
+Extremely Poor        0
+Name: count, dtype: int64
+
+========== PROVISIONAL PM2.5 CATEGORY PERCENTAGES (%) ==========
+pm2_5 (μg/m³)
+Good              17.12
+Fair              59.81
+Moderate          22.80
+Poor               0.27
+Very Poor          0.00
+Extremely Poor     0.00
+Name: proportion, dtype: float64
+
+
+
+==============================================================================
+17. EDA - CORRELATION ANALYSIS
+==============================================================================
+========== CORRELATION WITH PM2.5 ==========
+pm2_5 (μg/m³)               1.000
+pm10 (μg/m³)                0.953
+european_aqi (EAQI)         0.725
+carbon_monoxide (μg/m³)     0.722
+sulphur_dioxide (μg/m³)     0.585
+nitrogen_dioxide (μg/m³)    0.559
+relative_humidity_2m (%)    0.265
+precipitation (mm)         -0.069
+rain (mm)                  -0.071
+wind_speed_100m (km/h)     -0.210
+wind_direction_100m (°)    -0.224
+temperature_2m (°C)        -0.319
+ozone (μg/m³)              -0.429
+Name: pm2_5 (μg/m³), dtype: float64
+
+========== CORRELATION WITH EAQI ==========
+european_aqi (EAQI)         1.000
+pm10 (μg/m³)                0.741
+pm2_5 (μg/m³)               0.725
+carbon_monoxide (μg/m³)     0.593
+nitrogen_dioxide (μg/m³)    0.577
+sulphur_dioxide (μg/m³)     0.490
+relative_humidity_2m (%)   -0.025
+precipitation (mm)         -0.079
+temperature_2m (°C)        -0.079
+rain (mm)                  -0.079
+ozone (μg/m³)              -0.128
+wind_direction_100m (°)    -0.203
+wind_speed_100m (km/h)     -0.309
+Name: european_aqi (EAQI), dtype: float64

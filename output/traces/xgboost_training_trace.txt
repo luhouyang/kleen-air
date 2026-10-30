@@ -1,0 +1,11 @@
+Training trace - xgboost
+Generated: 2026-10-30 14:03:03
+------------------------------------------------------------
+Model: xgboost (native xgboost available: True)
+Training rows: 61368 | validation rows: 13151
+Hyper-parameters: n_estimators<=1000, learning_rate=0.05, max_depth=6, subsample=0.9, colsample_bytree=0.9, early_stopping_rounds=50
+Regressor best iteration: 398
+Inverse-frequency class weights: Fair=0.336, Good=7.165, Moderate=0.560, Poor=10.169, Very Poor=557.891
+Classifier best iteration: 920
+Training wall-time (regressor + classifier): 6.4 s
+Total training wall-time: 6.4 s

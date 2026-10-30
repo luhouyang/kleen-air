@@ -1,0 +1,7 @@
+EARLY-WARNING PATH: PM2.5 FORECAST -> EAQI PM2.5 BAND
+(scored against the EAQI PM2.5 band of the OBSERVED next-hour PM2.5)
+============================================================
+                          Accuracy  Precision_macro  Recall_macro  F1_macro  F1_weighted  Recall_high_risk
+linear_logistic_baseline    0.9516           0.8854        0.8861    0.8856       0.9516            0.8794
+random_forest               0.9519           0.7047        0.7007    0.7027       0.9519            0.8599
+xgboost                     0.9525           0.7097        0.7095    0.7096       0.9526            0.8988

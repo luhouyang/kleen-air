@@ -1,0 +1,40 @@
+
+========== EAQI CATEGORY COUNTS ==========
+european_aqi (EAQI)
+Good               3039
+Fair              54674
+Moderate          28471
+Poor               1489
+Very Poor            23
+Extremely Poor        0
+Name: count, dtype: int64
+
+========== EAQI CATEGORY PERCENTAGES (%) ==========
+european_aqi (EAQI)
+Good               3.47
+Fair              62.34
+Moderate          32.47
+Poor               1.70
+Very Poor          0.03
+Extremely Poor     0.00
+Name: proportion, dtype: float64
+
+========== PROVISIONAL PM2.5 CATEGORY COUNTS ==========
+pm2_5 (μg/m³)
+Good              15011
+Fair              52447
+Moderate          19997
+Poor                241
+Very Poor             0
+Extremely Poor        0
+Name: count, dtype: int64
+
+========== PROVISIONAL PM2.5 CATEGORY PERCENTAGES (%) ==========
+pm2_5 (μg/m³)
+Good              17.12
+Fair              59.81
+Moderate          22.80
+Poor               0.27
+Very Poor          0.00
+Extremely Poor     0.00
+Name: proportion, dtype: float64

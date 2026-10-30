@@ -1,0 +1,59 @@
+
+========== DATASET OVERVIEW ==========
+Rows: 87696
+Columns: 14
+Start date: 2016-09-30 00:00:00
+End date: 2026-10-01 23:00:00
+Column names: ['time', 'pm10 (μg/m³)', 'pm2_5 (μg/m³)', 'carbon_monoxide (μg/m³)', 'nitrogen_dioxide (μg/m³)', 'sulphur_dioxide (μg/m³)', 'ozone (μg/m³)', 'european_aqi (EAQI)', 'temperature_2m (°C)', 'relative_humidity_2m (%)', 'rain (mm)', 'wind_speed_100m (km/h)', 'wind_direction_100m (°)', 'precipitation (mm)']
+
+========== MISSING VALUES ==========
+                          Missing Count  Missing Percentage (%)
+time                                  0                     0.0
+pm10 (μg/m³)                          0                     0.0
+pm2_5 (μg/m³)                         0                     0.0
+carbon_monoxide (μg/m³)               0                     0.0
+nitrogen_dioxide (μg/m³)              0                     0.0
+sulphur_dioxide (μg/m³)               0                     0.0
+ozone (μg/m³)                         0                     0.0
+european_aqi (EAQI)                   0                     0.0
+temperature_2m (°C)                   0                     0.0
+relative_humidity_2m (%)              0                     0.0
+rain (mm)                             0                     0.0
+wind_speed_100m (km/h)                0                     0.0
+wind_direction_100m (°)               0                     0.0
+precipitation (mm)                    0                     0.0
+
+========== DUPLICATE CHECKS ==========
+Duplicate rows: 0
+Duplicate timestamps: 0
+
+========== TIMESTAMP CHECKS ==========
+Time column type: datetime64[us]
+First timestamp: 2016-09-30 00:00:00
+Last timestamp: 2026-10-01 23:00:00
+Most common time interval:
+time
+0 days 01:00:00    87695
+Name: count, dtype: int64
+
+========== DESCRIPTIVE STATISTICS ==========
+                            count    mean    std   min    25%    50%    75%    max
+pm10 (μg/m³)              87696.0   15.68   9.22   1.5    9.2   13.3   19.6   86.6
+pm2_5 (μg/m³)             87696.0   11.27   7.89   0.9    5.8    8.9   14.3   83.5
+carbon_monoxide (μg/m³)   87696.0  208.94  72.06  12.0  162.0  191.0  239.0  803.0
+nitrogen_dioxide (μg/m³)  87696.0   15.19  10.20   1.2    7.7   12.4   19.9  106.7
+sulphur_dioxide (μg/m³)   87696.0    2.08   1.30   0.0    1.2    1.8    2.6   21.4
+ozone (μg/m³)             87696.0   50.39  27.74   0.0   30.0   50.0   68.0  175.0
+european_aqi (EAQI)       87696.0   34.59  10.27  12.0   26.0   33.0   42.0   95.0
+temperature_2m (°C)       87696.0   10.88   8.27 -15.0    4.5   10.4   17.0   39.8
+relative_humidity_2m (%)  87696.0   74.29  18.07  11.0   62.0   79.0   89.0  100.0
+rain (mm)                 87696.0    0.07   0.33   0.0    0.0    0.0    0.0   15.8
+wind_speed_100m (km/h)    87696.0   22.30   9.72   0.0   15.5   21.7   28.2   89.8
+wind_direction_100m (°)   87696.0  202.08  91.39   0.0  125.0  224.0  274.0  360.0
+precipitation (mm)        87696.0    0.07   0.33   0.0    0.0    0.0    0.0   15.8
+
+========== EUROPEAN AQI SUMMARY ==========
+Minimum EAQI: 12
+Maximum EAQI: 95
+Mean EAQI: 34.59
+Median EAQI: 33.0
