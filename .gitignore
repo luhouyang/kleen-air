@@ -1,2 +1,4 @@
-output
 archive
+__pycache__
+.vscode
+*.joblib

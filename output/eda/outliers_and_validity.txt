@@ -1,0 +1,29 @@
+
+========== OUTLIER INSPECTION (IQR) ==========
+                Variable  Lower Bound  Upper Bound  Potential Outliers  Percentage (%)
+            pm10 (μg/m³)        -6.40        35.20                3851            4.39
+           pm2_5 (μg/m³)        -6.95        27.05                4474            5.10
+ carbon_monoxide (μg/m³)        46.50       354.50                3973            4.53
+nitrogen_dioxide (μg/m³)       -10.60        38.20                3315            3.78
+ sulphur_dioxide (μg/m³)        -0.90         4.70                3735            4.26
+           ozone (μg/m³)       -27.00       125.00                 694            0.79
+     european_aqi (EAQI)         2.00        66.00                 473            0.54
+     temperature_2m (°C)       -14.25        35.75                  62            0.07
+relative_humidity_2m (%)        21.50       129.50                 152            0.17
+               rain (mm)         0.00         0.00               12817           14.62
+  wind_speed_100m (km/h)        -3.55        47.25                1153            1.31
+ wind_direction_100m (°)       -98.50       497.50                   0            0.00
+      precipitation (mm)         0.00         0.00               13693           15.61
+
+========== PHYSICAL VALIDITY CHECKS ==========
+Negative PM10: 0
+Negative PM2.5: 0
+Negative carbon monoxide: 0
+Negative nitrogen dioxide: 0
+Negative sulphur dioxide: 0
+Negative ozone: 0
+Humidity outside 0-100%: 0
+Negative rainfall: 0
+Negative precipitation: 0
+Negative wind speed: 0
+Wind direction outside 0-360 degrees: 0

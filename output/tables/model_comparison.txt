@@ -1,0 +1,7 @@
+MODEL COMPARISON ON THE TEST SET
+============================================================
+                            RMSE     MAE      R2  Accuracy  Precision_macro  Recall_macro  F1_macro  F1_weighted  Recall_high_risk
+linear_logistic_baseline  0.8067  0.5436  0.9789    0.8542           0.6003        0.9132    0.6789       0.8681            0.9097
+random_forest             0.8033  0.5260  0.9791    0.9139           0.6559        0.6779    0.6632       0.9161            0.7355
+xgboost                   0.7785  0.5143  0.9803    0.9267           0.7681        0.9051    0.8181       0.9282            0.8452
+naive_persistence         0.8991  0.5981  0.9738       NaN              NaN           NaN       NaN          NaN               NaN

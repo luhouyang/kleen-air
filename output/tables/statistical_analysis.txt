@@ -1,0 +1,55 @@
+STATISTICAL ANALYSIS (test set)
+============================================================
+
+[1] Bootstrap 95% confidence intervals (1000 resamples):
+  linear_logistic_baseline: RMSE 95% CI [0.7852, 0.8292]
+  linear_logistic_baseline: F1_macro 95% CI [0.5903, 0.7986]
+  random_forest: RMSE 95% CI [0.7805, 0.8268]
+  random_forest: F1_macro 95% CI [0.6516, 0.8377]
+  xgboost: RMSE 95% CI [0.7563, 0.8013]
+  xgboost: F1_macro 95% CI [0.6767, 0.8916]
+
+[2] Paired error tests vs reference regressor 'xgboost':
+  xgboost vs linear_logistic_baseline:
+    paired t-test on squared errors: t=-5.396, p=6.916e-08
+    Wilcoxon signed-rank on |errors|: W=37578516.0, p=1.153e-38
+  xgboost vs random_forest:
+    paired t-test on squared errors: t=-4.926, p=8.513e-07
+    Wilcoxon signed-rank on |errors|: W=40982532.0, p=2.147e-07
+  xgboost vs naive_persistence:
+    paired t-test on squared errors: t=-17.074, p=1.147e-64
+    Wilcoxon signed-rank on |errors|: W=33506447.0, p=1.024e-110
+
+[3] McNemar tests vs reference classifier 'xgboost':
+  xgboost vs linear_logistic_baseline: McNemar (continuity-corrected) b=1187, c=234, chi2=637.793, p=1.009e-140
+  xgboost vs random_forest: McNemar (continuity-corrected) b=364, c=196, chi2=49.802, p=1.701e-12
+
+[4] Residual diagnostics for 'xgboost':
+  mean: -0.0762
+  std: 0.7748
+  skew: -0.5096
+  lag1_autocorr: 0.1489
+  shapiro_W: 0.8791
+  shapiro_p: 0.0000
+
+[5] SHAP driver ranking with plausible emission sources:
+  SHAP global importance (best tree regressor: xgboost):
+    pm2_5 (μg/m³)                mean|SHAP| =   4.9772  -> current fine-particle level (persistence)
+    pm10 (μg/m³)                 mean|SHAP| =   0.4526  -> coarse particles (dust, resuspension, combustion)
+    hour                         mean|SHAP| =   0.1767  -> diurnal activity pattern (traffic, heating)
+    pm2_5_lag_3                  mean|SHAP| =   0.1466  -> recent pollution history
+    pm2_5_lag_1                  mean|SHAP| =   0.1194  -> recent pollution history
+    carbon_monoxide (μg/m³)      mean|SHAP| =   0.1159  -> incomplete combustion / road traffic
+    relative_humidity_2m (%)     mean|SHAP| =   0.1121  -> meteorology (particle formation/growth)
+    pm2_5_rolling_mean_24        mean|SHAP| =   0.0812  -> 24 h background pollution level
+    wind_direction_100m (°)      mean|SHAP| =   0.0742  -> meteorology (transport direction)
+    nitrogen_dioxide (μg/m³)     mean|SHAP| =   0.0712  -> road traffic & fuel combustion
+    wind_speed_100m (km/h)       mean|SHAP| =   0.0599  -> meteorology (dispersion)
+    temperature_2m (°C)          mean|SHAP| =   0.0567  -> meteorology (reaction rates, inversions)
+    european_aqi (EAQI)          mean|SHAP| =   0.0540  -> overall current air quality (aggregate index)
+    ozone (μg/m³)                mean|SHAP| =   0.0474  -> photochemical smog (secondary formation)
+    month                        mean|SHAP| =   0.0272  -> seasonal pattern (heating season, meteorology)
+    sulphur_dioxide (μg/m³)      mean|SHAP| =   0.0251  -> industry & power generation
+    pm2_5_lag_24                 mean|SHAP| =   0.0232  -> day-ahead pollution level
+    rain (mm)                    mean|SHAP| =   0.0168  -> meteorology (wet deposition)
+    precipitation (mm)           mean|SHAP| =   0.0057  -> meteorology (wet deposition)

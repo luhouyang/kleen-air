@@ -1,0 +1,22 @@
+
+===== RANDOM FOREST FEATURE IMPORTANCE =====
+pm2_5 (μg/m³)               0.974813
+pm2_5_lag_1                 0.004669
+pm2_5_lag_3                 0.002052
+pm10 (μg/m³)                0.001886
+wind_direction_100m (°)     0.001668
+carbon_monoxide (μg/m³)     0.001575
+wind_speed_100m (km/h)      0.001556
+pm2_5_rolling_mean_24       0.001514
+temperature_2m (°C)         0.001412
+pm2_5_lag_24                0.001335
+hour                        0.001327
+nitrogen_dioxide (μg/m³)    0.001252
+sulphur_dioxide (μg/m³)     0.001210
+relative_humidity_2m (%)    0.001158
+ozone (μg/m³)               0.001084
+month                       0.000530
+european_aqi (EAQI)         0.000400
+rain (mm)                   0.000287
+precipitation (mm)          0.000274
+Name: Importance, dtype: float64

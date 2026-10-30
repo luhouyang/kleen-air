@@ -1,0 +1,22 @@
+
+===== CORRELATION WITH NEXT-HOUR PM2.5 =====
+pm2_5 (μg/m³)               0.987071
+pm2_5_lag_1                 0.964760
+pm10 (μg/m³)                0.942779
+pm2_5_lag_3                 0.909413
+pm2_5_rolling_mean_24       0.832503
+carbon_monoxide (μg/m³)     0.725350
+european_aqi (EAQI)         0.721169
+pm2_5_lag_24                0.658429
+sulphur_dioxide (μg/m³)     0.584900
+nitrogen_dioxide (μg/m³)    0.567285
+ozone (μg/m³)              -0.430770
+temperature_2m (°C)        -0.326285
+relative_humidity_2m (%)    0.271648
+wind_direction_100m (°)    -0.229731
+wind_speed_100m (km/h)     -0.213528
+rain (mm)                  -0.078599
+precipitation (mm)         -0.076999
+hour                       -0.043446
+month                      -0.040506
+Name: pm2_5_next_hour, dtype: float64

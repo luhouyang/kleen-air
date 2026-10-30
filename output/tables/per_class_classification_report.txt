@@ -1,0 +1,47 @@
+PER-CLASS CLASSIFICATION REPORT (test set)
+============================================================
+
+--- linear_logistic_baseline ---
+                precision    recall  f1-score   support
+
+          Good       0.40      0.97      0.57       728
+          Fair       0.96      0.84      0.90      9443
+      Moderate       0.84      0.86      0.85      2825
+          Poor       0.54      0.89      0.67       154
+     Very Poor       0.25      1.00      0.40         1
+Extremely Poor       0.00      0.00      0.00         0
+
+      accuracy                           0.85     13151
+     macro avg       0.50      0.76      0.57     13151
+  weighted avg       0.90      0.85      0.87     13151
+
+
+--- random_forest ---
+                precision    recall  f1-score   support
+
+          Good       0.62      0.83      0.71       728
+          Fair       0.96      0.93      0.94      9443
+      Moderate       0.87      0.90      0.89      2825
+          Poor       0.82      0.73      0.77       154
+     Very Poor       0.00      0.00      0.00         1
+Extremely Poor       0.00      0.00      0.00         0
+
+      accuracy                           0.91     13151
+     macro avg       0.55      0.56      0.55     13151
+  weighted avg       0.92      0.91      0.92     13151
+
+
+--- xgboost ---
+                precision    recall  f1-score   support
+
+          Good       0.67      0.83      0.74       728
+          Fair       0.96      0.94      0.95      9443
+      Moderate       0.89      0.92      0.90      2825
+          Poor       0.81      0.84      0.82       154
+     Very Poor       0.50      1.00      0.67         1
+Extremely Poor       0.00      0.00      0.00         0
+
+      accuracy                           0.93     13151
+     macro avg       0.64      0.75      0.68     13151
+  weighted avg       0.93      0.93      0.93     13151
+

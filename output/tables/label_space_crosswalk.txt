@@ -1,0 +1,8 @@
+LABEL-SPACE CROSSWALK (rows: PM2.5 band of observed next-hour PM2.5, cols: official next-hour EAQI category, row-normalised)
+============================================================
+eaqi_category_next_hour   Fair   Good  Moderate   Poor  Very Poor
+pm2_5_next_hour                                                  
+Fair                     0.459  0.000     0.515  0.026        0.0
+Good                     0.848  0.076     0.068  0.008        0.0
+Moderate                 0.000  0.000     0.995  0.005        0.0
+Poor                     0.000  0.000     0.988  0.012        0.0

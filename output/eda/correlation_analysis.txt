@@ -1,0 +1,32 @@
+
+========== CORRELATION WITH PM2.5 ==========
+pm2_5 (μg/m³)               1.000
+pm10 (μg/m³)                0.953
+european_aqi (EAQI)         0.725
+carbon_monoxide (μg/m³)     0.722
+sulphur_dioxide (μg/m³)     0.585
+nitrogen_dioxide (μg/m³)    0.559
+relative_humidity_2m (%)    0.265
+precipitation (mm)         -0.069
+rain (mm)                  -0.071
+wind_speed_100m (km/h)     -0.210
+wind_direction_100m (°)    -0.224
+temperature_2m (°C)        -0.319
+ozone (μg/m³)              -0.429
+Name: pm2_5 (μg/m³), dtype: float64
+
+========== CORRELATION WITH EAQI ==========
+european_aqi (EAQI)         1.000
+pm10 (μg/m³)                0.741
+pm2_5 (μg/m³)               0.725
+carbon_monoxide (μg/m³)     0.593
+nitrogen_dioxide (μg/m³)    0.577
+sulphur_dioxide (μg/m³)     0.490
+relative_humidity_2m (%)   -0.025
+precipitation (mm)         -0.079
+temperature_2m (°C)        -0.079
+rain (mm)                  -0.079
+ozone (μg/m³)              -0.128
+wind_direction_100m (°)    -0.203
+wind_speed_100m (km/h)     -0.309
+Name: european_aqi (EAQI), dtype: float64

@@ -1,0 +1,12 @@
+Training trace - linear_logistic_baseline
+Generated: 2026-10-30 14:02:17
+------------------------------------------------------------
+Time-series cross-validation on the training block (5 folds):
+  Fold 1: RMSE=1.7258 MAE=1.1888 R2=0.9667 | F1_macro=0.5861 Acc=0.8442
+  Fold 2: RMSE=1.2376 MAE=0.8400 R2=0.9754 | F1_macro=0.6989 Acc=0.8776
+  Fold 3: RMSE=0.9414 MAE=0.6410 R2=0.9834 | F1_macro=0.5840 Acc=0.8584
+  Fold 4: RMSE=0.9003 MAE=0.6182 R2=0.9808 | F1_macro=0.5904 Acc=0.8666
+  Fold 5: RMSE=0.8510 MAE=0.5920 R2=0.9815 | F1_macro=0.7258 Acc=0.8625
+  CV mean: RMSE=1.1312 +/- 0.3264 | F1_macro=0.6370 +/- 0.0621
+Validation block: RMSE=0.9271 | F1_macro=0.7255
+Total training wall-time: 12.9 s

@@ -4,7 +4,7 @@ import pandas as pd
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-from processing.dataloader import load_combined_data
+from processing.dataloader import load_clean_data
 
 
 PM25_COL = "pm2_5 (μg/m³)"
@@ -73,13 +73,13 @@ def show_comparison(original_df, featured_df):
 
 
 def main():
-    df = load_combined_data()
+    df = load_clean_data()
 
     df_features = create_features(df)
 
     show_comparison(df, df_features)
 
-    output_path = Path("data/featured_dataset.csv")
+    output_path = PROJECT_ROOT / "data" / "featured_dataset.csv"
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df_features.to_csv(output_path, index=False)
 
