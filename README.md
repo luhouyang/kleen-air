@@ -31,7 +31,7 @@ python train.py                 # trains all 3 model families + full evaluation 
 python eval.py                  # optional: re-run evaluation suite on saved artifacts
 ```
 
-## Outputs (`results/`, `models/`)
+## Outputs (`output/`)
 
 - `metrics_<model>.json`, `predictions/predictions_<model>.csv`
 - `traces/<model>_training_trace.txt` — CV folds / grid search / early-stopping history
