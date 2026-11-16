@@ -64,6 +64,11 @@ def shap_explainer(name):
     return shap.TreeExplainer(load_model(name)["regressor"])
 
 
+def predict_categories(classifier, X):
+    """Category names as a pandas Series, whatever the model returns."""
+    return pd.Series(np.asarray(classifier.predict(X)), index=X.index).astype(str)
+
+
 def badge(category):
     colour = EAQI_COLOURS.get(category, "#999999")
     text = "#FFFFFF" if category in ("Poor", "Very Poor", "Extremely Poor") else "#14213D"
@@ -90,8 +95,8 @@ models = load_model(model_name)
 mode = st.sidebar.radio("Input", ["Pick an hour from the test set", "Enter values manually"])
 high_risk_rows = test.index[test[CATEGORY_TARGET].astype(str).isin(HIGH_RISK_CATEGORIES)]
 # Start on a high-risk hour the model catches, so the demo opens on an alert.
-hits = high_risk_rows[np.asarray(models["classifier"].predict(test.loc[high_risk_rows, features])
-                                 .astype(str).isin(HIGH_RISK_CATEGORIES))]
+hits = high_risk_rows[predict_categories(models["classifier"], test.loc[high_risk_rows, features])
+                      .isin(HIGH_RISK_CATEGORIES).to_numpy()]
 if "row" not in st.session_state:
     st.session_state["row"] = int(hits[0]) if len(hits) else int(high_risk_rows[0])
 if st.sidebar.button("Jump to a random high-risk hour"):
@@ -116,7 +121,7 @@ tab_live, tab_results, tab_alerts = st.tabs(["Live forecast", "Model results", "
 # ---------------------------------------------------------------- live forecast
 with tab_live:
     pred_pm = float(models["regressor"].predict(X)[0])
-    pred_cat = str(models["classifier"].predict(X).iloc[0])
+    pred_cat = predict_categories(models["classifier"], X).iloc[0]
     is_high = pred_cat in HIGH_RISK_CATEGORIES
 
     if is_high:
