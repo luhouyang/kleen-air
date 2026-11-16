@@ -4,8 +4,10 @@ Live demo of the trained pipeline: next-hour PM2.5 forecast, EAQI category,
 high-risk alert and SHAP explanation for any test-set hour, plus the saved
 model results and an alert log.
 
-Run (after `python train.py` has created output/models/*.joblib):
+Run:
     streamlit run app.py
+If output/models/*.joblib is missing (e.g. on Streamlit Cloud), XGBoost is
+trained once on startup with the same settings as model/boosting.py.
 """
 from pathlib import Path
 import sys
@@ -47,9 +49,26 @@ def load_test_set():
     return test.reset_index(drop=True)
 
 
+@st.cache_resource(show_spinner="Training XGBoost (first start only, about 30 seconds)...")
+def train_xgboost():
+    """Used on Streamlit Cloud, where the .joblib files are not in the repo."""
+    from processing.dataset import CATEGORY_TARGET as CAT, split_features_target
+    df = load_featured_data()
+    train_df, val_df, _ = chronological_split(df)
+    X_train, y_train = split_features_target(train_df)
+    X_val, y_val = split_features_target(val_df)
+    result = model.boosting.train(dict(
+        X_train=X_train, y_train=y_train, X_val=X_val, y_val=y_val,
+        y_train_cat=train_df[CAT].astype(str), y_val_cat=val_df[CAT].astype(str)))
+    return {"regressor": result["regressor"], "classifier": result["classifier"]}
+
+
 @st.cache_resource
 def load_model(name):
-    return joblib.load(MODELS_DIR / f"{name}.joblib")
+    path = MODELS_DIR / f"{name}.joblib"
+    if path.exists():
+        return joblib.load(path)
+    return train_xgboost()
 
 
 @st.cache_data
@@ -76,11 +95,8 @@ def badge(category):
             f"border-radius:999px;font-weight:600;font-size:1.1rem'>{category}</span>")
 
 
-available = [m for m in MODEL_LABELS if (MODELS_DIR / f"{m}.joblib").exists()]
-if not available:
-    st.error("No trained models found in output/models/. Run `python train.py` first, "
-             "then restart this app.")
-    st.stop()
+# Use saved models when they exist; otherwise train XGBoost once on startup.
+available = [m for m in MODEL_LABELS if (MODELS_DIR / f"{m}.joblib").exists()] or ["xgboost"]
 
 test = load_test_set()
 features = feature_columns(test)
